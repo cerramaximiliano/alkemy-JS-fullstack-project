@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <title>Alkemy Fullstack JS Challenge - Home</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <link type="text/css" rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        };
+        .nav-brand{
+          margin-right: auto !important;
+        }
+      }
+
+      .b-example-divider {
+        height: 3rem;
+        background-color: rgba(0, 0, 0, .1);
+        border: solid rgba(0, 0, 0, .15);
+        border-width: 1px 0;
+        box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+      }
+
+      .b-example-vr {
+        flex-shrink: 0;
+        width: 1.5rem;
+        height: 100vh;
+      }
+
+      .bi {
+        vertical-align: -.125em;
+        fill: currentColor;
+      }
+
+      .nav-scroller {
+        position: relative;
+        z-index: 2;
+        height: 2.75rem;
+        overflow-y: hidden;
+      }
+
+      .nav-scroller .nav {
+        display: flex;
+        flex-wrap: nowrap;
+        padding-bottom: 1rem;
+        margin-top: -1px;
+        overflow-x: auto;
+        text-align: center;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+      }
+      @media (max-width: 768px) {
+      .nav-margins {
+        margin: auto !important
+      }
+    }
+    </style>
+
+  </head>
+  <body>
+    
+<header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 m-auto shadow">
+  <a class="navbar-brand nav-margins col-md-3 col-lg-2 px-3 fs-6">Alkemy Challenge</a>
+  <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="navbar-nav">
+    <div class="nav-item text-nowrap">
+      <button type="button" class="btn btn-link" id="logOut">Salir</button>
+    </div>
+  </div>
+</header>
+
+
+<div class="container-fluid">
+  <div class="row">
+    <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+      <div class="position-sticky pt-3 sidebar-sticky">
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/home">
+              <span data-feather="home" class="align-text-bottom"></span>
+              Dashboard
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/budget" id="listAllItems">
+              <span data-feather="file" class="align-text-bottom"></span>
+              Listar Todos
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" id="addItem" data-bs-toggle="modal" data-bs-target="#addItemModal">
+              <span data-feather="file" class="align-text-bottom"></span>
+              Agregar Operación
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" id="earningsItems">
+              <span data-feather="shopping-cart" class="align-text-bottom"></span>
+              Ingresos
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" id="expenseItems">
+              <span data-feather="users" class="align-text-bottom"></span>
+              Egresos
+            </a>
+          </li>
+        </ul>
+        
+      </div>
+    </nav>
+
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Dashboard</h1>
+        <div class="btn-toolbar mb-2 mb-md-0">
+        </div>
+      </div>
+
+      
+      <div class="card mt-5 mb-5" style="width: 18rem;">
+        <div class="card-body">
+          <h2>Balance</h2>
+          <p class="card-text">Balance de operaciones.</p>
+          <h1 class="card-text">
+            <span>$ </span>
+            <span  id="balance">
+              <%= balance %>
+            </span>
+          </h1>
+        </div>
+      </div>
+
+      <h2>Ultimos registros</h2>
+      <div class="table-responsive">
+        <table class="table table-striped table-sm">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Tipo</th>
+              <th scope="col">Monto</th>
+              <th scope="col">Descripción</th>
+              <th scope="col">Fecha</th>
+              <th scope="col">Categoría</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- budget[0].id  -->
+            <% for (var i = 0; i < budget.length ; i++) { %>
+              <% if (i > number) { %>
+                <% false } else { %>
+              <tr>
+                <td><%= budget[i].id  %></td>
+                <td><%= budget[i].type  %></td>
+                <td><%= budget[i].amount  %></td>
+                <td><%= budget[i].description  %></td>
+                <td><%= (new Date(budget[i].date).getDate()).toString() + '/' + (new Date(budget[i].date).getMonth() + 1).toString() + '/' + (new Date(budget[i].date).getFullYear()).toString() %></td>
+                <td><%= budget[i].category  %></td>
+                <td>
+                  <button type="button" class="btn btn-outline-danger" name=<%= budget[i].id  %> >
+                    <i class="bi bi-trash"></i>
+                  </button>
+                </td>
+                <td>
+                  <button type="button" class="btn btn-outline-success" name=<%= budget[i].id  %> >
+                    <i class="bi bi-pencil"></i>
+                  </button>
+                </td>
+              </tr>
+              <% }; %>
+            <% }; %>
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+</div>
+
+
+
+<div class="modal fade" id="addItemModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form class="needs-validation">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Agregar Operación</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label for="exampleFormControlInput1" class="form-label">Tipo de operación</label>
+          <select class="form-select" aria-label="Default select example" id="typeOfOperation" required>
+            <option selected value="" disabled>Elige un tipo</option>
+            <option value="ingreso">Ingreso</option>
+            <option value="egreso">Egreso</option>
+          </select>
+          <div class="valid-feedback"></div>
+          <div class="invalid-feedback">Elija una opción válida.</div>
+        </div>
+        <div class="mb-3">
+          <label for="exampleFormControlInput1" class="form-label">Categoría</label>
+          <select class="form-select" aria-label="Default select example" id="categoryOperation" required>
+            <option selected value="" disabled>Elige un tipo</option>
+            <option value="alimentos">Alimentos</option>
+            <option value="esparcimiento">Esparcimiento</option>
+            <option value="ingreso">Actividad laboral</option>
+            <option value="servicios">Servicios</option>
+            <option value="vivienda">Vivienda</option>
+          </select>
+          <div class="valid-feedback"></div>
+          <div class="invalid-feedback">Elija una opción válida.</div>
+        </div>
+        <div class="mb-3">
+          <label for="exampleFormControlInput1" class="form-label">Monto</label>
+          <input type="number" class="form-control" id="amountOfOperation" placeholder="Indica un monto" required>
+          <div class="valid-feedback"></div>
+          <div class="invalid-feedback">Complete el campo.</div>
+        </div>
+        <div class="mb-3">
+          <label for="exampleFormControlInput1" class="form-label">Descripción</label>
+          <input type="text" class="form-control" id="descriptionOfOperation" placeholder="Escribe una descripción" required>
+          <div class="valid-feedback"></div>
+          <div class="invalid-feedback">Complete el campo.</div>
+        </div>
+        <div class="mb-3">
+          <label for="exampleFormControlInput1" class="form-label" required>Fecha</label>
+          <input type="date" class="form-control" id="dateOfOperation" placeholder="Señala la fecha" required>
+          <div class="valid-feedback"></div>
+          <div class="invalid-feedback">Complete el campo.</div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary" id="submitOperation">Aceptar</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="successModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticAlertModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticAlertModal">Operación grabada!</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        La operación fue grabada con éxito.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="closeSuccessModal" data-bs-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="modalErase" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalEraseLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalEraseLabel">Confirmar acción</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="modalText">
+        ¿Desea eliminar la operación seleccionada?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="closeEraseModal" data-bs-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary" id="confirmErase" name="">Aceptar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="modalEdit" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalEditLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div id="alertDanger">
+      </div>
+
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalEditLabel">Confirmar acción</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="modalInput">
+        Complete los campos que desee editar:
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label for="exampleFormControlInput1" class="form-label">Monto</label>
+          <input type="number" class="form-control" id="amountOfOperationEdit" placeholder="Indica un monto">
+        </div>
+        <div class="mb-3">
+          <label for="exampleFormControlInput1" class="form-label">Descripción</label>
+          <input type="text" class="form-control" id="descriptionOfOperationEdit" placeholder="Escribe una descripción">
+        </div>
+        <div class="mb-3">
+          <label for="exampleFormControlInput1" class="form-label" required>Fecha</label>
+          <input type="date" class="form-control" id="dateOfOperationEdit" placeholder="Señala la fecha">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="closeEditModal" data-bs-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary" id="confirmEdit" name="">Aceptar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="serverErrorModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="serverAlertModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="serverAlertModal">Error</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Ha ocurrido un error en el servidor, por favor intente nuevamente más tarde.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="" data-bs-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    <script src="/assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script>
+    <script src="/home.js"></script>
+  </body>
+</html>
